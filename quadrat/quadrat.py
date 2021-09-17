@@ -20,18 +20,25 @@ def main(decision = True):
     four_ac = 4 * a * c
     q = b_squared - four_ac
     if q < 0:
-        print("Sorry, the answer is imaginary")
-        decision = input.get_decision("Would you like to try again? ")
-        return main(decision)
-    positive_root = ((-(b) + sqrt(q)) / (2 * a))
-    negative_root = ((-(b) - sqrt(q)) / (2 * a))
+        q = q / (-1)
+        # print("Sorry, the answer is imaginary")
+        # decision = input.get_decision("Would you like to try again? ")
+        complex_positive = complex(-b, sqrt(q))
+        positive_root = complex_positive / complex(2*a, 0)
+        complex_negative = complex(-b, -sqrt(q))
+        negative_root = complex_negative / complex(2*a, 0)
+        if negative_root.real == 0:
+            negative_root = complex(-negative_root.real, negative_root.imag)
+    else:
+        positive_root = ((-(b) + sqrt(q)) / (2 * a))
+        negative_root = ((-(b) - sqrt(q)) / (2 * a))
     if positive_root == negative_root:
         result = positive_root
         print(f"The zero is {result}")
     else:
         result1 = negative_root
         result2 = positive_root
-        print(f"The zeros are {result1} and {result2}")
+        print(f"The zeros are {result1:.2f} and {result2:.2f}") # prints results rounded to 2 decimal places. Note: will also round numbers that Python stored with < 2 decimal places to 2 decimal places
     decision = input.get_decision("Would you like to solve another equation? ")
     return main(decision)
 
